@@ -1,0 +1,26 @@
+<controllers>
+    <!-- Common Files -->
+    <source>/APP-INF/common/Utils.js</source>
+    <source>/APP-INF/common/settings.js</source>
+    <source>/APP-INF/common/api.js</source>
+    <source>/APP-INF/common/logos.js</source>
+    <source>/APP-INF/common/testing.js</source>
+    
+    <!-- DB Handlers -->
+    <source>/APP-INF/db/config.js</source>
+    <source>/APP-INF/db/cache.js</source>
+    <source>/APP-INF/db/common.js</source>
+    <source>/APP-INF/db/mappings.js</source>
+    
+    <!-- Picture Search API -->
+    <source>/APP-INF/imageSearch/api.js</source>
+    
+    <!-- Video Search API -->
+    <source>/APP-INF/videoSearch/api.js</source>
+    
+    <!-- Settings -->
+    <settings enabled="true" path="pixabay-lib/repoAppSettings.html">
+        <function>pixaBaySaveSettings</function>
+    </settings>
+
+</controllers>

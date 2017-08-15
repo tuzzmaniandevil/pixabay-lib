@@ -1,0 +1,25 @@
+<div class="form-group">
+    <label class="col-sm-4 control-label" for="pixabayApiKey">API Key</label>
+    <div class="col-sm-7">
+        #set( $apiKey = $app.getSetting("pixabayApiKey") )
+        <input id="pixabayApiKey" type="text" class="form-control" name="pixabayApiKey" value="$!apiKey"/>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label class="col-sm-4 control-label" for="providerId">Version</label>
+    <div class="col-sm-7">
+        #set( $curVersion = $app.getCurrentVersion($page.websiteBranch) )            
+
+        <select name="version" id="version" class="form-control">
+            <option value="">[Please select]</option>            
+            #foreach($version in $app.availableVersions )
+            <option value="$version" $formatter.ifEqual("selected", "", $curVersion, $version)>
+                $version
+            </option>
+            #end
+        </select>
+
+    </div>
+</div>
