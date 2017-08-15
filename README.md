@@ -2,10 +2,12 @@
 
 # Table of Contents
 1. [Usage](#usage)
+    1. jQuery Plugin
+    2. Server-side API
 2. [License](#license)
 
-## Usage <a name="usage"></a>
+## Usage
 
-## License <a name="license"></a>
+## License
 
 This library is licensed under the [MIT License](./LICENSE), Please review the [terms and conditions](https://pixabay.com/api/docs/) of Pixabay before using this library
