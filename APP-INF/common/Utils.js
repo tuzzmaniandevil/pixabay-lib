@@ -79,6 +79,12 @@
         }
     };
 
+    /**
+     * Safely converts the given value to a float
+     * 
+     * @param {type} o
+     * @returns {Number}
+     */
     Utils.safeFloat = function (o) {
         if (this.isNull.call(this, o)) {
             return 0;
@@ -96,6 +102,12 @@
         }
     };
 
+    /**
+     * Safely converts the given value to a boolean
+     * 
+     * @param {Object} o
+     * @returns {Boolean}
+     */
     Utils.safeBool = function (o) {
         if (this.isNull.call(this, o)) {
             return false;
@@ -105,6 +117,24 @@
             var s = this.safeString.call(this, o).toLowerCase();
             return s === 'true' || s === 'yes';
         }
+    };
+
+    /**
+     * Generates a random string with the specified length, Default is 8 characters
+     * 
+     * @param {Number} length
+     * @returns {String}
+     */
+    Utils.generateRandomText = function (length) {
+        length = length || 8;
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var text = "";
+
+        for (var i = 0; i < length; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+
+        return text;
     };
 
     g.Utils = Utils;

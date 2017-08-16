@@ -4,5 +4,31 @@
             "appId": "KongoDB",
             "branch": ""
         }                            
+    ],
+    "dependencies": [
+        {
+            "js": {
+                "group": "main",
+                "path": "/theme/apps/pixabay-lib/libs/jquery.flex-images/jquery.flex-images.min.js"
+            }
+        },
+        {
+            "js": {
+                "group": "main",
+                "path": "/theme/apps/pixabay-lib/libs/jquery.pixabay-0.0.1.js"
+            }
+        },
+        {
+            "css": {
+                "cssMedia": "all",
+                "path": "/theme/apps/pixabay-lib/libs/jquery.flex-images/jquery.flex-images.css"
+            }
+        },
+        {
+            "css": {
+                "cssMedia": "all",
+                "path": "/theme/apps/pixabay-lib/libs/jquery.pixabay-0.0.1.css"
+            }
+        }
     ]
 }

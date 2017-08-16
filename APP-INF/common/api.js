@@ -45,7 +45,7 @@
             result: null
         };
 
-        xml.addEventListener("load", function () {
+        xml.addEventListener('load', function () {
             responseText = xml.getResponseText();
 
             result.status = xml.statusText;
@@ -55,7 +55,7 @@
             result.rateLimit.reset = xml.getResponseHeader('X-RateLimit-Reset');
         });
 
-        xml.addEventListener('type', function () {
+        xml.addEventListener('error', function () {
             result.status = xml.statusText;
             result.statusCode = xml.status;
         });
@@ -67,7 +67,7 @@
             try {
                 result.result = JSON.parse(responseText);
                 
-                g.Pixabay.CACHE.addItem(page, finalUrl, responseText);
+                g.Pixabay.CACHE.addItem(page, finalUrl, JSON.stringify(result));
             } catch (e) {
                 result.result = responseText;
             }

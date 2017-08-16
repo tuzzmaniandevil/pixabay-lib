@@ -8,7 +8,15 @@
     g.Pixabay.CACHE = {
         _getHash: function (URL) {
             var sha1 = formatter.crypto.createHash('SHA-1');
-            return formatter.toBase64String(sha1.digest(Utils.safeString(URL).getBytes()));
+            var sha1Bytes = sha1.digest(Utils.safeString(URL).getBytes());
+
+            var hashString = '';
+            for (var i = 0; i < sha1Bytes.length; i++) {
+                var hex = ('0' + (sha1Bytes[i] & 0xFF).toString(16)).slice(-2);
+                hashString = hashString + hex;
+            }
+            
+            return hashString;
         },
         _isRecordValid: function (record) {
             if (Utils.isNotNull(record)) {
