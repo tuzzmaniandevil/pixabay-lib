@@ -23,6 +23,7 @@
             + '                        </div>'
             + '                        <div class="text-center pixabayNoResultsDiv lead" style="display: none;"><p><br/>Sorry, we couldn\'t find any matches.</p></div>'
             + '                        <div class="text-center pixabayLoadingDiv"><i class="fa fa-refresh fa-spin fa-3x"></i></div>'
+            + '                        <div class="text-center pixabayPaginationDiv" style="display: none;"></div>'
             + '                    </div>'
             + '                </div>'
             + '            </div>'
@@ -42,6 +43,7 @@
         title: 'Image Search',
         btnCloseText: 'Cancel',
         btnSaveText: 'Save',
+        maxPerPage: 20,
         initQuery: null,
         onSelect: null,
         onSave: null,
@@ -83,6 +85,7 @@
             $this.$modal.find('.pixabayLoadingDiv').show();
             $this.$modal.find('.pixabayNoResultsDiv').hide();
             $this.$modal.find('.pixabaySearch').val('');
+            $this.$modal.find('.pixabayPaginationDiv').hide().empty();
         });
 
         // Register Button Event listener
@@ -105,6 +108,18 @@
         // Register Image Select
         $this.$modal.on('click', 'div.item', function (e) {
             $this._INTERNAL._handleOnSelect.call($this, this);
+        });
+
+        $this.$modal.on('click', '.btn-pixabay-previous', function (e) {
+            e.preventDefault();
+
+            $this.previous();
+        });
+
+        $this.$modal.on('click', '.btn-pixabay-next', function (e) {
+            e.preventDefault();
+
+            $this.next();
         });
 
         // Register Close button listener
@@ -140,12 +155,32 @@
 
             return null;
         },
-        search: function () {
+        next: function () {
             var $this = this;
 
+            $this.$currentPage = $this.$currentPage || 1;
+            $this.$currentPage++;
+
+            $this.search($this.$currentPage);
+        },
+        previous: function () {
+            var $this = this;
+
+            $this.$currentPage = $this.$currentPage || 1;
+            if ($this.$currentPage > 1) {
+                $this.$currentPage--;
+
+                $this.search($this.$currentPage);
+            }
+        },
+        search: function (pageNumber) {
+            var $this = this;
+
+            $this.$currentPage = pageNumber || 1;
             $this.$modal.find('div.item').removeClass('selected');
             $this.$modal.find('.pixabayGallery').hide().empty();
             $this.$modal.find('.pixabayLoadingDiv').show();
+            $this.$modal.find('.pixabayPaginationDiv').hide().empty();
             $this.$modal.find('.pixabayNoResultsDiv').hide();
             var q = $this.$modal.find('.pixabaySearch').val() || $this.$options.defaultQuery || '';
 
@@ -153,7 +188,9 @@
                 url: $this.$options.url,
                 dataType: 'JSON',
                 data: {
-                    q: q
+                    q: q,
+                    per_page: $this.$options.maxPerPage,
+                    page: $this.$currentPage
                 },
                 success: function (resp) {
                     var newImages = [];
@@ -176,11 +213,38 @@
                     }
 
                     if (newImages.length > 0) {
+                        var showPagination = false;
+                        var pagBar = '';
+
+                        if (resp.result.total > $this.$options.maxPerPage) {
+                            // resp.result.totalHits > ($this.$currentPage * $this.$options.maxPerPage)
+
+                            // Generate pagination bar
+                            var bar = '<div class="btn-group">';
+
+                            // Previous Button
+                            if ($this.$currentPage > 1) {
+                                bar += '<button class="btn btn-default btn-pixabay-previous"><i class="fa fa-chevron-left" aria-hidden="true"> Previous</i></button>';
+                                showPagination = true;
+                            }
+
+                            // Next Button
+                            if (resp.result.totalHits > ($this.$currentPage * $this.$options.maxPerPage)) {
+                                bar += '<button class="btn btn-default btn-pixabay-next">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>';
+                                showPagination = true;
+                            }
+
+                            bar += '</div>';
+                        }
+
                         $this.$modal.find('.pixabayGallery').append(newImages);
-
                         $this.$modal.find('.pixabayGallery').show();
+                        $this.$modal.find('.pixabayGallery').flexImages({rowHeight: 150, maxRows: 5, truncate: false});
 
-                        $this.$modal.find('.pixabayGallery').flexImages({rowHeight: 150, maxRows: 4, truncate: true});
+                        if (showPagination) {
+                            $this.$modal.find('.pixabayPaginationDiv').append(bar);
+                            $this.$modal.find('.pixabayPaginationDiv').show();
+                        }
                     } else {
                         $this.$modal.find('.pixabayNoResultsDiv').show();
                     }

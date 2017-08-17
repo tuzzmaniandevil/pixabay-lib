@@ -46,3 +46,7 @@
 .pixabaySearchModal .pixabaySearchContainer {
     padding-bottom: 10px;
 }
+
+.pixabaySearchModal .pixabayPaginationDiv {
+    padding-top: 15px;
+}
