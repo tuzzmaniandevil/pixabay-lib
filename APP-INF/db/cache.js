@@ -47,7 +47,7 @@
 
             if (g.Pixabay.CACHE._isRecordValid(record)) {
                 return JSON.parse(JSON.parse(record.json).result);
-            } else {
+            } else if (Utils.isNotNull(record)) {
                 record.delete();
             }
 
