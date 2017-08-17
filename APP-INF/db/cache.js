@@ -15,19 +15,25 @@
                 var hex = ('0' + (sha1Bytes[i] & 0xFF).toString(16)).slice(-2);
                 hashString = hashString + hex;
             }
-            
+
             return hashString;
         },
         _isRecordValid: function (record) {
             if (Utils.isNotNull(record)) {
                 var recordJson = JSON.parse(record.json);
 
-                var createdDate = formatter.toDate(recordJson.createdDate);
-                if (Utils.isNotNull(createdDate)) {
-                    var durationHours = formatter.durationHours(createdDate, formatter.now);
-                    if (durationHours <= 24) {
-                        return true;
-                    }
+                if (Utils.isNull(recordJson.createdDate)) {
+                    return false;
+                }
+
+                var createdDate = Utils.safeInt(recordJson.createdDate);
+                var now = (new Date()).getTime();
+                var hours = Math.abs(createdDate - now) / 3600000;
+
+                log.info('_isRecordValid | Created Date: {} | Now: {} | Hours: {}', createdDate, now, hours);
+
+                if (hours < 24) {
+                    return true;
                 }
             }
 
@@ -41,6 +47,8 @@
 
             if (g.Pixabay.CACHE._isRecordValid(record)) {
                 return JSON.parse(JSON.parse(record.json).result);
+            } else {
+                record.delete();
             }
 
             return null;
@@ -52,7 +60,7 @@
 
             var item = {
                 url: URL,
-                createdDate: formatter.formatDateISO8601(formatter.now),
+                createdDate: formatter.now.getTime(),
                 createdBy: (Utils.isNotNull(currentUser) ? currentUser.name : null),
                 result: results
             };
