@@ -1,4 +1,4 @@
-/* global Utils */
+/* global Utils, fileManager, log */
 
 (function (g) {
     g._configToParam = function (config) {
@@ -31,7 +31,6 @@
             return cachedItem;
         }
 
-        var responseText = null;
         var xml = new XMLHttpRequest();
 
         var result = {
@@ -46,13 +45,27 @@
         };
 
         xml.addEventListener('load', function () {
-            responseText = xml.getResponseText();
+            var responseText = xml.getResponseText();
 
             result.status = xml.statusText;
             result.statusCode = xml.status;
             result.rateLimit.limit = xml.getResponseHeader('X-RateLimit-Limit');
             result.rateLimit.remaining = xml.getResponseHeader('X-RateLimit-Remaining');
             result.rateLimit.reset = xml.getResponseHeader('X-RateLimit-Reset');
+
+            if (result.statusCode >= 200 && result.statusCode < 300) {
+                try {
+                    result.result = JSON.parse(responseText);
+
+                    g.Pixabay.CACHE.addItem(page, finalUrl, JSON.stringify(result));
+                } catch (e) {
+                    result.errorMsg = responseText;
+                }
+            } else {
+                result.errorMsg = responseText;
+            }
+
+
         });
 
         xml.addEventListener('error', function () {
@@ -63,15 +76,73 @@
         xml.open('GET', finalUrl, false);
         xml.send();
 
-        if (Utils.isStringNotBlank(responseText)) {
-            try {
-                result.result = JSON.parse(responseText);
-                
-                g.Pixabay.CACHE.addItem(page, finalUrl, JSON.stringify(result));
-            } catch (e) {
-                result.result = responseText;
-            }
+        return result;
+    };
+
+    g._fetchFile = function (page, url, config, size) {
+        if (Utils.isStringBlank(config.id)) {
+            return {
+                status: 'Invalid Image ID',
+                statusCode: 500,
+                result: null
+            };
         }
+
+        var searchResult = g._sendRequest(page, url, {
+            key: config.key,
+            id: config.id
+        });
+
+        var result = {
+            status: null,
+            statusCode: null,
+            result: null
+        };
+
+        if (!(searchResult.statusCode >= 200 && searchResult.statusCode < 300)) {
+            result.status = searchResult.status;
+            result.statusCode = searchResult.statusCode;
+
+            return result;
+        }
+
+        if (searchResult.result.hits.length < 1) {
+
+        }
+        var hit = searchResult.result.hits[0];
+        var imgUrl = hit.webformatURL;
+
+        if (Utils.isStringNotBlank(size)) {
+            var ext = Utils.getFileExt(imgUrl);
+            imgUrl = imgUrl.replace('_' + hit.webformatWidth + '.' + ext, '_' + size + '.' + ext);
+        }
+
+        log.info('Image Download URL: {}', imgUrl);
+
+        // First we need to check the cache
+        var cachedItem = g.Pixabay.CACHE.getCachedItem(page, imgUrl);
+        if (Utils.isNotNull(cachedItem)) {
+            return cachedItem;
+        }
+
+        var xml = new XMLHttpRequest();
+
+        xml.addEventListener('load', function () {
+            result.status = xml.statusText;
+            result.statusCode = xml.status;
+
+            if (result.statusCode >= 200 && result.statusCode < 300) {
+                var imageBytes = xml.response.responseBodyAsBytes;
+                result.result = fileManager.upload(imageBytes);
+            } else {
+                result.errorMsg = xml.getResponseText();
+            }
+        });
+
+        xml.open('GET', imgUrl, false);
+        xml.send();
+
+        g.Pixabay.CACHE.addItem(page, imgUrl, JSON.stringify(result));
 
         return result;
     };

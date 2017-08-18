@@ -49,6 +49,7 @@
      * @returns {String}
      */
     Utils.safeString = function (o) {
+        log.info('safeString: {}', o, typeof o);
         if (o === null || typeof o === 'undefined') {
             return '';
         }
@@ -135,6 +136,17 @@
         }
 
         return text;
+    };
+
+    /**
+     * Get the extention of a file
+     * 
+     * @param {type} o
+     * @returns {unresolved}
+     */
+    Utils.getFileExt = function (o) {
+        var filename = this.safeString.call(this, o);
+        return filename.split('.').pop();
     };
 
     g.Utils = Utils;

@@ -34,9 +34,28 @@
         searchConfig.key = g._getPixabayApiKey();
 
         if (Utils.isStringNotBlank(searchConfig.q)) {
-            searchConfig.q = Utils.safeString(searchConfig.q).split(' ').join('+');
+            var parts = [];
+            var splits = Utils.safeString(searchConfig.q).split(' ');
+
+            for (var i = 0; i < splits.length; i++) {
+                var s = splits[i];
+                if (Utils.isStringNotBlank(s)) {
+                    parts.push(Utils.safeString(s));
+                }
+            }
+            
+            searchConfig.q = parts.join('+');
         }
 
         return g._sendRequest(page, 'https://pixabay.com/api/', searchConfig);
+    };
+
+    g.Pixabay.fetchImage = function (page, imageId, size) {
+        var searchConfig = {
+            key: g._getPixabayApiKey(),
+            id: imageId
+        };
+
+        return g._fetchFile(page, 'https://pixabay.com/api/', searchConfig, size);
     };
 })(this);

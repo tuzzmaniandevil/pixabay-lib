@@ -43,7 +43,9 @@
         title: 'Image Search',
         btnCloseText: 'Cancel',
         btnSaveText: 'Save',
-        maxPerPage: 20,
+        searchOptions: {
+            per_page: 20
+        },
         initQuery: null,
         onSelect: null,
         onSave: null,
@@ -189,7 +191,7 @@
                 dataType: 'JSON',
                 data: {
                     q: q,
-                    per_page: $this.$options.maxPerPage,
+                    per_page: $this.$options.searchOptions.per_page,
                     page: $this.$currentPage
                 },
                 success: function (resp) {
@@ -216,9 +218,7 @@
                         var showPagination = false;
                         var pagBar = '';
 
-                        if (resp.result.total > $this.$options.maxPerPage) {
-                            // resp.result.totalHits > ($this.$currentPage * $this.$options.maxPerPage)
-
+                        if (resp.result.total > $this.$options.searchOptions.per_page) {
                             // Generate pagination bar
                             var bar = '<div class="btn-group">';
 
@@ -229,7 +229,7 @@
                             }
 
                             // Next Button
-                            if (resp.result.totalHits > ($this.$currentPage * $this.$options.maxPerPage)) {
+                            if (resp.result.totalHits > ($this.$currentPage * $this.$options.searchOptions.per_page)) {
                                 bar += '<button class="btn btn-default btn-pixabay-next">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>';
                                 showPagination = true;
                             }

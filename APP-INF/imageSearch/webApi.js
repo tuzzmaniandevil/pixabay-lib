@@ -15,6 +15,13 @@
     controllerMappings
             .adminController()
             .enabled(true)
+            .path('/_pixabayFetchImage')
+            .addMethod('GET', '_pixabayFetchImage')
+            .build();
+
+    controllerMappings
+            .adminController()
+            .enabled(true)
             .path('/testPixabay')
             .defaultView(views.templateView('/theme/apps/pixabay-lib/testPage.html'))
             .build();
@@ -30,6 +37,15 @@
         }
 
         var result = g.Pixabay.imageSearch(page, config);
+
+        return views.textView(JSON.stringify(result), 'application/json');
+    };
+
+    g._pixabayFetchImage = function (page, params) {
+        var imageId = Utils.safeString(params.get('id'));
+        var size = Utils.safeString(params.get('size'));
+
+        var result = g.Pixabay.fetchImage(page, imageId, size);
 
         return views.textView(JSON.stringify(result), 'application/json');
     };
