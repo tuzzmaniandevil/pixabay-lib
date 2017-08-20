@@ -54,9 +54,19 @@
             return null;
         },
         addItem: function (page, URL, results) {
-            var db = g._getOrCreateUrlDb(page);
+            log.info('Adding cache record');
+            var db;
+            try {
+                db = g._getOrCreateUrlDb(page);
+            } catch (e) {
+                log.error('Error getting Db: {}', e.message, e);
+                throw e;
+            }
+            log.info('Got DB {}', db);
             var hash = g.Pixabay.CACHE._getHash(URL);
+            log.info('Got Cache Hash: {}', hash);
             var currentUser = securityManager.currentUser;
+            log.info('Got current User: {}', currentUser);
 
             var item = {
                 url: URL,
@@ -64,6 +74,8 @@
                 createdBy: (Utils.isNotNull(currentUser) ? currentUser.name : null),
                 result: results
             };
+
+            log.info('Got Cache Item: {}', item);
 
             db.createNew(g._config.RECORD_NAMES.SEARCH_CACHE(hash), JSON.stringify(item), g._config.RECORD_TYPES.SEARCH_CACHE);
         }

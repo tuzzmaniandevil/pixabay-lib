@@ -59,7 +59,7 @@
 
                     g.Pixabay.CACHE.addItem(page, finalUrl, JSON.stringify(result));
                 } catch (e) {
-                    result.errorMsg = responseText;
+                    result.errorMsg = 'Exception: ' + e + ' - Msg: ' + e.message;
                 }
             } else {
                 result.errorMsg = responseText;

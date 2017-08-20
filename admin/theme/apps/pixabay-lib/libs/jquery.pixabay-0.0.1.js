@@ -186,29 +186,35 @@
             $this.$modal.find('.pixabayNoResultsDiv').hide();
             var q = $this.$modal.find('.pixabaySearch').val() || $this.$options.defaultQuery || '';
 
+            var data = $.extend({}, $this.$options.searchOptions);
+            data.q = q;
+            data.page = $this.$currentPage;
+
             $.ajax({
                 url: $this.$options.url,
                 dataType: 'JSON',
-                data: {
-                    q: q,
-                    per_page: $this.$options.searchOptions.per_page,
-                    page: $this.$currentPage
-                },
+                data: data,
                 success: function (resp) {
                     var newImages = [];
                     for (var i = 0; i < resp.result.hits.length; i++) {
                         var hit = resp.result.hits[i];
 
-                        var item = $('<div class="item" data-w="' + hit.previewWidth + '" data-h="' + hit.previewHeight + '" data-imageid="' + hit.id + '">'
-                                + '    <img src="' + hit.previewURL + '" alt="">'
-                                + '    <div>'
-                                + '        <div class="counts hide-xs hide-sm">'
-                                + '            <em><i class="fa fa-thumbs-o-up"></i> ' + hit.likes + '</em>'
-                                + '            <em><i class="fa fa-star-o"></i> ' + hit.favorites + '</em>'
-                                + '            <em><i class="fa fa-comment-o"></i> ' + hit.comments + '</em>'
-                                + '        </div>'
-                                + '    </div>'
-                                + '</div>');
+                        var item = '<div class="item" data-w="' + hit.previewWidth + '" data-h="' + hit.previewHeight + '" data-imageid="' + hit.id + '">'
+                                + '    <img src="' + hit.previewURL + '" alt="">';
+
+                        if (hit.likes !== null && typeof hit.likes !== 'undefined') {
+                            item += '    <div>'
+                                    + '        <div class="counts hide-xs hide-sm">'
+                                    + '            <em><i class="fa fa-thumbs-o-up"></i> ' + hit.likes + '</em>'
+                                    + '            <em><i class="fa fa-star-o"></i> ' + hit.favorites + '</em>'
+                                    + '            <em><i class="fa fa-comment-o"></i> ' + hit.comments + '</em>'
+                                    + '        </div>'
+                                    + '    </div>';
+                        }
+
+                        item += +'</div>';
+
+                        item = $(item);
 
                         item.data('imagedetails', hit);
                         newImages.push(item);

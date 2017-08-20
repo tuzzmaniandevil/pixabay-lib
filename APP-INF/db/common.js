@@ -5,12 +5,16 @@
         var jsonDb = page.find('/jsondb');
         var db = jsonDb.child(g._config.DB_NAME);
         log.info("jsonDb = {} db = {}", jsonDb, db);
-        if (Utils.isNull(db)) {
-            db = jsonDb.createDb(g._config.DB_NAME, g._config.DB_TITLE, g._config.DB_NAME);
+        try {
+            if (Utils.isNull(db)) {
+                db = jsonDb.createDb(g._config.DB_NAME, g._config.DB_TITLE, g._config.DB_NAME);
 
-            g._updateMappings(db);
+                g._updateMappings(db);
 
-            g._setAllowAccess(db, true);
+                g._setAllowAccess(db, true);
+            }
+        } catch (e) {
+            log.error('Error checking DB exists: {}', e.message, e);
         }
 
         return db;

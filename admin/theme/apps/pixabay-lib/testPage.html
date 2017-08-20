@@ -48,7 +48,10 @@
         <script type="text/javascript">
             (function ($) {
                 $('.btn-pixabay').pixabayModal({
-                    initQuery: 'horses',
+                    initQuery: 'puppies',
+                    searchOptions: {
+                        response_group: 'high_resolution'
+                    },
                     onSelect: function (e, image) {
                         flog('onSelect', image);
                     },

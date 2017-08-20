@@ -1,7 +1,7 @@
 /* global Utils, controllerMappings, views */
 
 (function (g) {
-    var ACCEPTED_PARAMS = ['q', 'lang', 'id', 'response_group', 'image_type',
+    var ACCEPTED_PARAMS = ['q', 'lang', 'id', 'image_type', 'response_group',
         'orientation', 'category', 'min_width', 'min_height', 'editors_choice',
         'safesearch', 'order', 'page', 'per_page'];
 
