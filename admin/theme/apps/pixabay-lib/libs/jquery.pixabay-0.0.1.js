@@ -59,7 +59,7 @@
         // Parse the options
         $this.$options = DEFAULT_OPTIONS;
         if (typeof options === 'object') {
-            $this.$options = $.extend({}, DEFAULT_OPTIONS, options);
+            $this.$options = $.extend(true, {}, DEFAULT_OPTIONS, options);
         }
 
         // Save modalId
@@ -222,7 +222,7 @@
 
                     if (newImages.length > 0) {
                         var showPagination = false;
-                        var pagBar = '';
+                        var bar = '';
 
                         if (resp.result.total > $this.$options.searchOptions.per_page) {
                             // Generate pagination bar

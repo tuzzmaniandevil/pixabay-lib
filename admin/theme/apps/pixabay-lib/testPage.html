@@ -50,7 +50,8 @@
                 $('.btn-pixabay').pixabayModal({
                     initQuery: 'puppies',
                     searchOptions: {
-                        response_group: 'high_resolution'
+                        response_group: 'high_resolution',
+                        image_type: 'photo'
                     },
                     onSelect: function (e, image) {
                         flog('onSelect', image);
@@ -62,7 +63,7 @@
                         flog('onSave', e, image);
                         $('#imageShow')
                                 .empty()
-                                .append('<img src="' + image.webformatURL + '" />');
+                                .append('<img src="' + image.fullHDURL + '" />');
                     }
                 });
             })(jQuery);

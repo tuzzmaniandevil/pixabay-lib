@@ -49,7 +49,6 @@
      * @returns {String}
      */
     Utils.safeString = function (o) {
-        log.info('safeString: {}', o, typeof o);
         if (o === null || typeof o === 'undefined') {
             return '';
         }

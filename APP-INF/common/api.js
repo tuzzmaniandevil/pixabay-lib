@@ -56,8 +56,6 @@
             if (result.statusCode >= 200 && result.statusCode < 300) {
                 try {
                     result.result = JSON.parse(responseText);
-
-                    g.Pixabay.CACHE.addItem(page, finalUrl, JSON.stringify(result));
                 } catch (e) {
                     result.errorMsg = 'Exception: ' + e + ' - Msg: ' + e.message;
                 }
@@ -75,6 +73,10 @@
 
         xml.open('GET', finalUrl, false);
         xml.send();
+
+        if (result.statusCode >= 200 && result.statusCode < 300) {
+            g.Pixabay.CACHE.addItem(page, finalUrl, JSON.stringify(result));
+        }
 
         return result;
     };
