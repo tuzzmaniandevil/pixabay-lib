@@ -46,7 +46,7 @@
         <div id="imageShow"></div>
 
         <script type="text/javascript">
-            (function ($) {
+            function initPixalBay() {
                 $('.btn-pixabay').pixabayModal({
                     initQuery: 'puppies',
                     searchOptions: {
@@ -66,6 +66,9 @@
                                 .append('<img src="' + image.fullHDURL + '" />');
                     }
                 });
+            }
+            (function ($) {
+                initPixalBay();
             })(jQuery);
         </script>
     </body>

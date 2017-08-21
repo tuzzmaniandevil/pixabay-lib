@@ -182,10 +182,16 @@
 
             if (isInstantiated) {
                 $this.$currentPage = null;
-                
+
                 $this.$elem.off('click');
-                $.removeData($this.$elem, 'pixabayModal');
-                $this.$modal.remove();
+
+                $this.$modal.on('hidden.bs.modal', function (e) {
+                    $this.$modal.off('hidden.bs.modal');
+                    $this.$elem.removeData('pixabayModal');
+                    $this.$modal.remove();
+                });
+
+                $this.hide();
             }
         },
         search: function (pageNumber) {
