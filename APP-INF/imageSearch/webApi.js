@@ -38,7 +38,12 @@
 
         var result = g.Pixabay.imageSearch(page, config);
 
-        return views.textView(JSON.stringify(result), 'application/json');
+        var spacing = 0;
+        if (Utils.safeBool(params.pretty)) {
+            spacing = 4;
+        }
+
+        return views.textView(JSON.stringify(result, null, spacing), 'application/json');
     };
 
     g._pixabayFetchImage = function (page, params) {
@@ -47,6 +52,11 @@
 
         var result = g.Pixabay.fetchImage(page, imageId, size);
 
-        return views.textView(JSON.stringify(result), 'application/json');
+        var spacing = 0;
+        if (Utils.safeBool(params.pretty)) {
+            spacing = 4;
+        }
+
+        return views.textView(JSON.stringify(result, null, spacing), 'application/json');
     };
 })(this);

@@ -1,4 +1,4 @@
-/* global Utils, fileManager, log */
+/* global Utils, fileManager, log, formatter */
 
 (function (g) {
     g._configToParam = function (config) {
@@ -90,10 +90,16 @@
             };
         }
 
-        var searchResult = g._sendRequest(page, url, {
+        var searchConfig = {
             key: config.key,
             id: config.id
-        });
+        };
+
+        if (config.id.match(/[a-z]/i)) {
+            searchConfig.response_group = 'high_resolution';
+        }
+
+        var searchResult = g._sendRequest(page, url, searchConfig);
 
         var result = {
             status: null,
@@ -135,7 +141,15 @@
 
             if (result.statusCode >= 200 && result.statusCode < 300) {
                 var imageBytes = xml.response.responseBodyAsBytes;
-                result.result = fileManager.upload(imageBytes);
+                var fileHash = fileManager.upload(imageBytes);
+                var dimensions = fileManager.utils.imageDimensions(fileHash);
+                result.result = {
+                    hash: fileHash,
+                    contentType: null,
+                    fileName: fileHash + '.' + Utils.getFileExt(imgUrl),
+                    imageWidth: dimensions.width,
+                    imageHeight: dimensions.height
+                };
             } else {
                 result.errorMsg = xml.getResponseText();
             }

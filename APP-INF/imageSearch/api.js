@@ -43,7 +43,7 @@
                     parts.push(Utils.safeString(s));
                 }
             }
-            
+
             searchConfig.q = parts.join('+');
         }
 
@@ -53,7 +53,7 @@
     g.Pixabay.fetchImage = function (page, imageId, size) {
         var searchConfig = {
             key: g._getPixabayApiKey(),
-            id: imageId
+            id: Utils.safeString(imageId)
         };
 
         return g._fetchFile(page, 'https://pixabay.com/api/', searchConfig, size);

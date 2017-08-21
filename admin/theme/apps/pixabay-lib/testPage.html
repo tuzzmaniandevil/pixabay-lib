@@ -5,45 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div id="pixabaySearchModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Image Search</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xs-8 col-xs-offset-2">
-                                <div class="input-group">
-                                    <input id="pixabaySearch" type="text" class="form-control" placeholder="Search term...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="pixabayGallery" class="pixabayGallery flex-images">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <button class="btn btn-info btn-pixabay" type="button">Open Modal</button>
 
         <br/>
         <br/>
         <br/>
-        <div id="imageShow"></div>
+        <div id="imageShow" class="col-md-12"></div>
 
         <script type="text/javascript">
             function initPixalBay() {
@@ -63,7 +30,7 @@
                         flog('onSave', e, image);
                         $('#imageShow')
                                 .empty()
-                                .append('<img src="' + image.fullHDURL + '" />');
+                                .append('<img class="img-responsive" src="' + image.fullHDURL + '" />');
                     }
                 });
             }
