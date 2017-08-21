@@ -175,6 +175,19 @@
                 $this.search($this.$currentPage);
             }
         },
+        destroy: function () {
+            var $this = this;
+
+            var isInstantiated = !!$this.$elem.data('pixabayModal');
+
+            if (isInstantiated) {
+                $this.$currentPage = null;
+                
+                $this.$elem.off('click');
+                $.removeData($this.$elem, 'pixabayModal');
+                $this.$modal.remove();
+            }
+        },
         search: function (pageNumber) {
             var $this = this;
 
