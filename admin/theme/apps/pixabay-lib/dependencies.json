@@ -15,7 +15,7 @@
         {
             "js": {
                 "group": "main",
-                "path": "/theme/apps/pixabay-lib/libs/jquery.pixabay-0.0.1.js"
+                "path": "/theme/apps/pixabay-lib/libs/jquery.pixabay/jquery.pixabay-0.0.1.js"
             }
         },
         {
@@ -27,7 +27,7 @@
         {
             "css": {
                 "cssMedia": "all",
-                "path": "/theme/apps/pixabay-lib/libs/jquery.pixabay-0.0.1.css"
+                "path": "/theme/apps/pixabay-lib/libs/jquery.pixabay/jquery.pixabay-0.0.1.css"
             }
         }
     ]

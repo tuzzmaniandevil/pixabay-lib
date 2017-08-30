@@ -15,6 +15,7 @@
             + '                                <button class="btn btn-default btn-pixabaySearch" type="button"><span class="glyphicon glyphicon-search"></span></button>'
             + '                            </span>'
             + '                        </div>'
+            + '                        {{filterTemplate}}'
             + '                    </div>'
             + '                </div>'
             + '                <div class="row">'
@@ -29,7 +30,7 @@
             + '            </div>'
             + '            <div class="modal-footer">'
             + '                <span class="pull-left text-left">Powered By<br/>'
-            + '                    <a target="_blank" href="https://pixabay.com/"><img height="17" width="auto" src="https://pixabay.com/static/img/logo.svg" alt="Pixabay"></a>'
+            + '                    <a target="_blank" href="https://pixabay.com/"><img height="17" width="auto" src="/theme/apps/pixabay-lib/libs/jquery.pixabay/img/logo.svg" alt="Pixabay"></a>'
             + '                </span>'
             + '                <button type="button" class="btn btn-default btn-pixabay-close">{{btnCloseText}}</button>'
             + '                <button type="button" class="btn btn-primary btn-pixabay-save">{{btnSaveText}}</button>'
@@ -37,6 +38,25 @@
             + '        </div>'
             + '    </div>'
             + '</div>';
+
+    var FILTER_TEMPLATE = '<div class="form-inline pixabay-filters">'
+            + '                            <div class="form-group pixabay-filter">'
+            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_photos" checked="checked">'
+            + '                                <label for="pixabay_filter_photos" class="css-label lite-gray-check">Photos</label>'
+            + '                            </div>'
+            + '                            <div class="form-group pixabay-filter">'
+            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_illustration">'
+            + '                                <label for="pixabay_filter_illustration" class="css-label lite-gray-check">Illustrations</label>'
+            + '                            </div>'
+            + '                            <div class="form-group pixabay-filter">'
+            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_horizontal" checked="checked">'
+            + '                                <label for="pixabay_filter_horizontal" class="css-label lite-gray-check">Horizontal</label>'
+            + '                            </div>'
+            + '                            <div class="form-group pixabay-filter">'
+            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_vertical" checked="checked">'
+            + '                                <label for="pixabay_filter_vertical" class="css-label lite-gray-check">Vertical</label>'
+            + '                            </div>'
+            + '                        </div>';
 
     var DEFAULT_OPTIONS = {
         url: '/_pixabayImage',
@@ -46,6 +66,7 @@
         searchOptions: {
             per_page: 20
         },
+        showFilter: true,
         initQuery: null,
         onSelect: null,
         onSave: null,
@@ -72,6 +93,13 @@
                 .replace('{{initQuery}}', $this.$options.initQuery || '')
                 .replace('{{btnCloseText}}', $this.$options.btnCloseText)
                 .replace('{{btnSaveText}}', $this.$options.btnSaveText);
+
+        var filterTemplate = '';
+        if ($this.$options.showFilter) {
+            filterTemplate = FILTER_TEMPLATE;
+        }
+        modalHtml = modalHtml.replace('{{filterTemplate}}', filterTemplate);
+
         $('body').append(modalHtml);
 
         $this.$modal = $('#pixabaySearchModal-' + $this.$modalId);

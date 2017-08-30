@@ -47,7 +47,7 @@
             searchConfig.q = parts.join('+');
         }
 
-        return g._sendRequest(page, 'https://pixabay.com/api/', searchConfig);
+        return g._sendRequest(page, g._config.API_URL, searchConfig);
     };
 
     g.Pixabay.fetchImage = function (page, imageId, size) {
@@ -56,6 +56,6 @@
             id: Utils.safeString(imageId)
         };
 
-        return g._fetchFile(page, 'https://pixabay.com/api/', searchConfig, size);
+        return g._fetchFile(page, g._config.API_URL, searchConfig, size);
     };
 })(this);

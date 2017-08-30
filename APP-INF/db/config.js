@@ -6,6 +6,7 @@
         _self.APP_ID = 'pixabay-lib';
         _self.DB_NAME = _self.APP_ID + '_db';
         _self.DB_TITLE = 'Pixabay Cache DB';
+        _self.API_URL = 'https://pixabay.com/api/';
 
         _self.RECORD_NAMES = {
             SEARCH_CACHE: function (hash) {
