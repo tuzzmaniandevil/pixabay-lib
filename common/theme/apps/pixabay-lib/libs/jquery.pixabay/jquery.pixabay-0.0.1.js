@@ -25,12 +25,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-(function ($) {
-    var MODAL_TEMPLATE = '<div class="modal fade pixabaySearchModal" data-backdrop="static" data-keyboard="false" id="pixabaySearchModal-{{modalId}}" role="dialog" tabindex="-1"> <div class="modal-dialog modal-lg" role="document"> <div class="modal-content"> <div class="modal-header"> <button aria-label="Close" class="close btn-pixabay-close" type="button"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title">{{modalTitle}}</h4> </div><div class="modal-body"> <div class="row pixabaySearchContainer"> <div class="col-xs-8 col-xs-offset-2"> <div class="input-group"> <input class="form-control pixabaySearch" placeholder="Search term..." type="text" value="{{defaultQuery}}"> <span class="input-group-btn"> <button class="btn btn-default btn-pixabaySearch" type="button"> <i class="glyphicon glyphicon-search"></i> </button> </span> </div>{{#if showFilter}}<div class="form-inline pixabay-filters"> <div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_photos" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_photos">Photos</label> </div><div class="form-group pixabay-filter"> <input class="css-checkbox" id="pixabay_filter_illustration" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_illustration">Illustrations</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_horizontal" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_horizontal">Horizontal</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_vertical" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_vertical">Vertical</label> </div></div>{{/if}}</div></div><div class="row"> <div class="col-md-12 pixabaySearchContainer"> <div class="pixabayGallery flex-images"></div><div class="text-center pixabayNoResultsDiv lead" style="display: none;"> <p> <br/> Sorry, we couldn&#x27;t find any matches. </p></div><div class="text-center pixabayLoadingDiv"> <i class="glyphicon glyphicon-refresh glyphicon-spin glyphicon-3x"></i> </div><div class="text-center pixabayPaginationDiv" style="display: none;"></div></div></div></div><div class="modal-footer"> <span class="pull-left text-left">Powered By<br><a href="https://pixabay.com/" target="_blank"> <img alt="Pixabay" height="17" src="/theme/apps/pixabay-lib/libs/jquery.pixabay/img/logo.svg" width="auto"> </a> </span> <button class="btn btn-default btn-pixabay-close" type="button">{{btnCloseText}}</button> <button class="btn btn-primary btn-pixabay-save" type="button" disabled="disabled">{{btnSaveText}}</button> </div></div></div></div>';
-    IMG_RESULT_TEMPLATE = '<div class="item" data-w="{{previewWidth}}" data-h="{{previewHeight}}" data-idhash="{{id_hash}}"><img src="{{previewURL}}" alt="">{{#if user}}{{#if user_id}}<div><div class="counts hide-xs hide-sm"><em><a class="credits-link" href="https://pixabay.com/users/{{user}}-{{user_id}}/" target="_blank">{{user}}</a> @ <a class="credits-link" href="https://pixabay.com/" target="_blank">Pixabay</a></em></div></div>{{/if}}{{/if}}</div>';
+(function($) {
+    var MODAL_TEMPLATE = '<div class="modal fade pixabaySearchModal" data-backdrop="static" data-keyboard="false" id="pixabaySearchModal-{{instanceId}}" role="dialog" tabindex="-1"> <div class="modal-dialog modal-lg" role="document"> <div class="modal-content"> <div class="modal-header"> <button aria-label="Close" class="close btn-pixabay-close" type="button"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title">{{modalTitle}}</h4> </div><div class="modal-body"> <div class="row pixabaySearchContainer"> <div class="col-xs-8 col-xs-offset-2"> <div class="input-group"> <input class="form-control pixabaySearch" placeholder="Search term..." type="text" value="{{defaultQuery}}"> <span class="input-group-btn"> <button class="btn btn-default btn-pixabaySearch" type="button"> <i class="glyphicon glyphicon-search"></i> </button> </span> </div>{{#if showFilter}}<div class="form-inline pixabay-filters"> <div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_photos" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_photos">Photos</label> </div><div class="form-group pixabay-filter"> <input class="css-checkbox" id="pixabay_filter_illustration" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_illustration">Illustrations</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_horizontal" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_horizontal">Horizontal</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_vertical" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_vertical">Vertical</label> </div></div>{{/if}}</div></div><div class="row"> <div class="col-md-12 pixabaySearchContainer"> <div class="pixabayGallery flex-images"></div><div class="text-center pixabayNoResultsDiv lead" style="display: none;"> <p> <br/> Sorry, we couldn&#x27;t find any matches. </p></div><div class="text-center pixabayLoadingDiv"> <i class="glyphicon glyphicon-refresh glyphicon-spin glyphicon-3x"></i> </div><div class="text-center pixabayPaginationDiv" style="display: none;"></div></div></div></div><div class="modal-footer"> <span class="pull-left text-left">Powered By<br><a href="https://pixabay.com/" target="_blank"> <img alt="Pixabay" height="17" src="/theme/apps/pixabay-lib/libs/jquery.pixabay/img/logo.svg" width="auto"> </a> </span> <button class="btn btn-default btn-pixabay-close" type="button">{{btnCloseText}}</button> <button class="btn btn-primary btn-pixabay-save" type="button" disabled="disabled">{{btnSaveText}}</button> </div></div></div></div>';
+    var IMG_RESULT_TEMPLATE = '<div class="item" data-w="{{previewWidth}}" data-h="{{previewHeight}}" data-idhash="{{id_hash}}"><img src="{{previewURL}}" alt="">{{#if user}}{{#if user_id}}<div><div class="counts hide-xs hide-sm"><em><a class="credits-link" href="https://pixabay.com/users/{{user}}-{{user_id}}/" target="_blank">{{user}}</a> @ <a class="credits-link" href="https://pixabay.com/" target="_blank">Pixabay</a></em></div></div>{{/if}}{{/if}}</div>';
 
-    COMPILED_MODAL_TEMPLATE = Handlebars.compile(MODAL_TEMPLATE);
-    COMPILED_IMG_RESULT_TEMPLATE = Handlebars.compile(IMG_RESULT_TEMPLATE);
+    var COMPILED_MODAL_TEMPLATE = Handlebars.compile(MODAL_TEMPLATE);
+    var COMPILED_IMG_RESULT_TEMPLATE = Handlebars.compile(IMG_RESULT_TEMPLATE);
 
     var DEFAULT_OPTIONS = {
         url: '/_pixabayImage',
@@ -44,10 +44,11 @@
         defaultQuery: null,
         onSelect: null,
         onSave: null,
-        onCancel: null
+        onCancel: null,
+        isModal: true
     };
 
-    var PixabayModal = function (element, options) {
+    var PixabayModal = function(element, options) {
         var $this = this;
         $this.$elem = $(element);
 
@@ -55,14 +56,22 @@
         $this.$options = DEFAULT_OPTIONS;
         if (typeof options === 'object') {
             $this.$options = $.extend(true, {}, DEFAULT_OPTIONS, options);
+            if ($this.$options.isModal === null || typeof $this.$options.isModal === 'undefined') {
+                $this.$options.isModal = true;
+            } else if (typeof $this.$options.isModal === 'string') {
+                $this.$options.isModal = $this.$options.isModal.toLowerCase() == 'true';
+            }
         }
 
+        if ($this.$options.isModal) {
+
+        }
         // Save modalId
-        $this.$modalId = (new Date()).getTime();
+        $this.$instanceId = (new Date()).getTime();
 
         // Generate the modal
         var vars = {
-            modalId: $this.$modalId,
+            instanceId: $this.$instanceId,
             modalTitle: $this.$options.title,
             showFilter: $this.$options.showFilter,
             defaultQuery: $this.$options.defaultQuery || '',
@@ -74,20 +83,20 @@
 
         $('body').append(modalHtml);
 
-        $this.$modal = $('#pixabaySearchModal-' + $this.$modalId);
+        $this.$modal = $('#pixabaySearchModal-' + $this.$instanceId);
 
         // Register Modal Even listeners
-        $this.$modal.on('show.bs.modal', function(e){
+        $this.$modal.on('show.bs.modal', function(e) {
             // Revert Save Button
             $this.$modal.find('button.btn-pixabay-save')
-                    .html($this.$options.btnSaveText);
+                .html($this.$options.btnSaveText);
         });
-        
-        $this.$modal.on('shown.bs.modal', function (e) {
+
+        $this.$modal.on('shown.bs.modal', function(e) {
             $this.search();
         });
 
-        $this.$modal.on('hidden.bs.modal', function (e) {
+        $this.$modal.on('hidden.bs.modal', function(e) {
             $this.$modal.find('div.item').removeClass('selected');
             $this.$modal.find('.pixabayGallery').empty();
             $this.$modal.find('.pixabayLoadingDiv').show();
@@ -97,50 +106,50 @@
         });
 
         // Register Button Event listener
-        $this.$elem.on('click', function (e) {
+        $this.$elem.on('click', function(e) {
             e.preventDefault();
             $this.show();
         });
 
         // Register Search Change
-        $this.$modal.on('change', '.pixabaySearch', function (e) {
+        $this.$modal.on('change', '.pixabaySearch', function(e) {
             $this.search();
         });
 
         // Register Search button
-        $this.$modal.on('click', '.btn-pixabaySearch', function (e) {
+        $this.$modal.on('click', '.btn-pixabaySearch', function(e) {
             e.preventDefault();
             $this.search();
         });
 
         // Register Image Select
-        $this.$modal.on('click', 'div.item', function (e) {
+        $this.$modal.on('click', 'div.item', function(e) {
             $this._INTERNAL._handleOnSelect.call($this, this);
         });
-        
-        $this.$modal.on('click', 'div.item .credits-link', function(e){
+
+        $this.$modal.on('click', 'div.item .credits-link', function(e) {
             e.stopPropagation();
         });
 
-        $this.$modal.on('click', '.btn-pixabay-previous', function (e) {
+        $this.$modal.on('click', '.btn-pixabay-previous', function(e) {
             e.preventDefault();
 
             $this.previous();
         });
 
-        $this.$modal.on('click', '.btn-pixabay-next', function (e) {
+        $this.$modal.on('click', '.btn-pixabay-next', function(e) {
             e.preventDefault();
 
             $this.next();
         });
 
         // Register Close button listener
-        $this.$modal.on('click', '.btn-pixabay-close', function (e) {
+        $this.$modal.on('click', '.btn-pixabay-close', function(e) {
             $this._INTERNAL._handleOnCancel.call($this, this);
         });
 
         // Register Save button listener
-        $this.$modal.on('click', '.btn-pixabay-save', function (e) {
+        $this.$modal.on('click', '.btn-pixabay-save', function(e) {
             var sel = $this.$modal.find('div.item.selected');
 
             if (sel.length > 0) {
@@ -152,13 +161,13 @@
     };
 
     PixabayModal.prototype = {
-        show: function () {
+        show: function() {
             this.$modal.modal('show');
         },
-        hide: function () {
+        hide: function() {
             this.$modal.modal('hide');
         },
-        selected: function () {
+        selected: function() {
             var sel = this.$modal.find('div.item.selected');
 
             if (sel.length > 0) {
@@ -167,7 +176,7 @@
 
             return null;
         },
-        next: function () {
+        next: function() {
             var $this = this;
 
             $this.$currentPage = $this.$currentPage || 1;
@@ -175,7 +184,7 @@
 
             $this.search($this.$currentPage);
         },
-        previous: function () {
+        previous: function() {
             var $this = this;
 
             $this.$currentPage = $this.$currentPage || 1;
@@ -185,7 +194,7 @@
                 $this.search($this.$currentPage);
             }
         },
-        destroy: function () {
+        destroy: function() {
             var $this = this;
 
             var isInstantiated = !!$this.$elem.data('pixabayModal');
@@ -195,7 +204,7 @@
 
                 $this.$elem.off('click');
 
-                $this.$modal.on('hidden.bs.modal', function (e) {
+                $this.$modal.on('hidden.bs.modal', function(e) {
                     $this.$modal.off('hidden.bs.modal');
                     $this.$elem.removeData('pixabayModal');
                     $this.$modal.remove();
@@ -204,7 +213,7 @@
                 $this.hide();
             }
         },
-        search: function (pageNumber) {
+        search: function(pageNumber) {
             var $this = this;
 
             $this.$currentPage = pageNumber || 1;
@@ -224,7 +233,7 @@
                 url: $this.$options.url,
                 dataType: 'JSON',
                 data: data,
-                success: function (resp) {
+                success: function(resp) {
                     var newImages = [];
                     for (var i = 0; i < resp.result.hits.length; i++) {
                         var hit = resp.result.hits[i];
@@ -262,7 +271,11 @@
 
                         $this.$modal.find('.pixabayGallery').append(newImages);
                         $this.$modal.find('.pixabayGallery').show();
-                        $this.$modal.find('.pixabayGallery').flexImages({rowHeight: 150, maxRows: 5, truncate: false});
+                        $this.$modal.find('.pixabayGallery').flexImages({
+                            rowHeight: 150,
+                            maxRows: 5,
+                            truncate: false
+                        });
 
                         if (showPagination) {
                             $this.$modal.find('.pixabayPaginationDiv').append(bar);
@@ -274,13 +287,13 @@
 
                     $this.$modal.find('.pixabayLoadingDiv').hide();
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
 
                 }
             });
         },
         _INTERNAL: {
-            _handleOnSelect: function (elem) {
+            _handleOnSelect: function(elem) {
                 var $this = this;
 
                 var imgDetails = $(elem).data('imagedetails');
@@ -303,13 +316,13 @@
                     $this.$modal.find('.btn-pixabay-save').prop('disabled', false);
                 }
             },
-            _handleOnSave: function () {
+            _handleOnSave: function() {
                 var $this = this;
                 var sel = $this.$modal.find('div.item.selected');
 
                 // Adjust save button
                 $this.$modal.find('button.btn-pixabay-save')
-                        .html('<span class="glyphicon glyphicon-refresh glyphicon-spin"></span>');
+                    .html('<span class="glyphicon glyphicon-refresh glyphicon-spin"></span>');
 
                 var imageDetails = null;
 
@@ -331,12 +344,12 @@
                 if (!evt.isDefaultPrevented()) {
                     $this.hide();
                 }
-                
+
                 // Revert Save Button
                 $this.$modal.find('button.btn-pixabay-save')
-                        .html($this.$options.btnSaveText);
+                    .html($this.$options.btnSaveText);
             },
-            _handleOnCancel: function () {
+            _handleOnCancel: function() {
                 var $this = this;
                 var evt = jQuery.Event('pxb.cancel');
 
@@ -355,15 +368,15 @@
         }
     };
 
-    $.fn.pixabayModal = function (options) {
+    $.fn.pixabayModal = function(options) {
         if (typeof options === 'string' && this.data('pixabayModal')) {
             var data = this.data('pixabayModal');
             return data[options]();
         }
 
-        return this.each(function () {
-            var $this = $(this)
-                    , data = $this.data('pixabayModal');
+        return this.each(function() {
+            var $this = $(this),
+                data = $this.data('pixabayModal');
             if (!data)
                 $this.data('pixabayModal', (data = new PixabayModal(this, options)));
             if (typeof options === 'string')
