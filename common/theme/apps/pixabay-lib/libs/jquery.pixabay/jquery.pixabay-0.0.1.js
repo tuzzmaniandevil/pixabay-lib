@@ -1,9 +1,36 @@
+/**
+ * Pixabay API library for the {@link http://www.kademi.co/|Kademi} platform
+ * 
+ * @author Wesley Tuzza <wesley@tuzza.co>
+ * 
+ * @license
+ * MIT License
+ * Copyright (c) 2017 Tuzza.co
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 (function ($) {
     var MODAL_TEMPLATE = '<div class="modal fade pixabaySearchModal" data-backdrop="static" data-keyboard="false" id="pixabaySearchModal-{{modalId}}" role="dialog" tabindex="-1"> <div class="modal-dialog modal-lg" role="document"> <div class="modal-content"> <div class="modal-header"> <button aria-label="Close" class="close btn-pixabay-close" type="button"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title">{{modalTitle}}</h4> </div><div class="modal-body"> <div class="row pixabaySearchContainer"> <div class="col-xs-8 col-xs-offset-2"> <div class="input-group"> <input class="form-control pixabaySearch" placeholder="Search term..." type="text" value="{{defaultQuery}}"> <span class="input-group-btn"> <button class="btn btn-default btn-pixabaySearch" type="button"> <i class="glyphicon glyphicon-search"></i> </button> </span> </div>{{#if showFilter}}<div class="form-inline pixabay-filters"> <div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_photos" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_photos">Photos</label> </div><div class="form-group pixabay-filter"> <input class="css-checkbox" id="pixabay_filter_illustration" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_illustration">Illustrations</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_horizontal" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_horizontal">Horizontal</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_vertical" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_vertical">Vertical</label> </div></div>{{/if}}</div></div><div class="row"> <div class="col-md-12 pixabaySearchContainer"> <div class="pixabayGallery flex-images"></div><div class="text-center pixabayNoResultsDiv lead" style="display: none;"> <p> <br/> Sorry, we couldn&#x27;t find any matches. </p></div><div class="text-center pixabayLoadingDiv"> <i class="glyphicon glyphicon-refresh glyphicon-spin glyphicon-3x"></i> </div><div class="text-center pixabayPaginationDiv" style="display: none;"></div></div></div></div><div class="modal-footer"> <span class="pull-left text-left">Powered By<br><a href="https://pixabay.com/" target="_blank"> <img alt="Pixabay" height="17" src="/theme/apps/pixabay-lib/libs/jquery.pixabay/img/logo.svg" width="auto"> </a> </span> <button class="btn btn-default btn-pixabay-close" type="button">{{btnCloseText}}</button> <button class="btn btn-primary btn-pixabay-save" type="button" disabled="disabled">{{btnSaveText}}</button> </div></div></div></div>';
-    var IMG_RESULT_TEMPLATE = '<div class="item" data-w="{{previewWidth}}" data-h="{{previewHeight}}" data-idhash="{{id_hash}}"><img src="{{previewURL}}" alt="">{{#if user}}{{#if user_id}}<div><div class="counts hide-xs hide-sm"><em><a class="credits-link" href="https://pixabay.com/users/{{user}}-{{user_id}}/" target="_blank">{{user}}</a> @ <a class="credits-link" href="https://pixabay.com/" target="_blank">Pixabay</a></em></div></div>{{/if}}{{/if}}</div>';
+    IMG_RESULT_TEMPLATE = '<div class="item" data-w="{{previewWidth}}" data-h="{{previewHeight}}" data-idhash="{{id_hash}}"><img src="{{previewURL}}" alt="">{{#if user}}{{#if user_id}}<div><div class="counts hide-xs hide-sm"><em><a class="credits-link" href="https://pixabay.com/users/{{user}}-{{user_id}}/" target="_blank">{{user}}</a> @ <a class="credits-link" href="https://pixabay.com/" target="_blank">Pixabay</a></em></div></div>{{/if}}{{/if}}</div>';
 
-    var COMPILED_MODAL_TEMPLATE = Handlebars.compile(MODAL_TEMPLATE);
-    var COMPILED_IMG_RESULT_TEMPLATE = Handlebars.compile(IMG_RESULT_TEMPLATE);
+    COMPILED_MODAL_TEMPLATE = Handlebars.compile(MODAL_TEMPLATE);
+    COMPILED_IMG_RESULT_TEMPLATE = Handlebars.compile(IMG_RESULT_TEMPLATE);
 
     var DEFAULT_OPTIONS = {
         url: '/_pixabayImage',
