@@ -1,62 +1,9 @@
 (function ($) {
-    var MODAL_TEMPLATE = '<div id="pixabaySearchModal-{{modalId}}" class="modal fade pixabaySearchModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">'
-            + '    <div class="modal-dialog modal-lg" role="document">'
-            + '        <div class="modal-content">'
-            + '            <div class="modal-header">'
-            + '                <button type="button" class="close btn-pixabay-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-            + '                <h4 class="modal-title">{{modalTitle}}</h4>'
-            + '            </div>'
-            + '            <div class="modal-body">'
-            + '                <div class="row pixabaySearchContainer">'
-            + '                    <div class="col-xs-8 col-xs-offset-2">'
-            + '                        <div class="input-group">'
-            + '                            <input type="text" class="form-control pixabaySearch" placeholder="Search term..." value="{{initQuery}}">'
-            + '                            <span class="input-group-btn">'
-            + '                                <button class="btn btn-default btn-pixabaySearch" type="button"><span class="glyphicon glyphicon-search"></span></button>'
-            + '                            </span>'
-            + '                        </div>'
-            + '                        {{filterTemplate}}'
-            + '                    </div>'
-            + '                </div>'
-            + '                <div class="row">'
-            + '                    <div class="col-md-12 pixabaySearchContainer">'
-            + '                        <div class="pixabayGallery flex-images">'
-            + '                        </div>'
-            + '                        <div class="text-center pixabayNoResultsDiv lead" style="display: none;"><p><br/>Sorry, we couldn\'t find any matches.</p></div>'
-            + '                        <div class="text-center pixabayLoadingDiv"><i class="fa fa-refresh fa-spin fa-3x"></i></div>'
-            + '                        <div class="text-center pixabayPaginationDiv" style="display: none;"></div>'
-            + '                    </div>'
-            + '                </div>'
-            + '            </div>'
-            + '            <div class="modal-footer">'
-            + '                <span class="pull-left text-left">Powered By<br/>'
-            + '                    <a target="_blank" href="https://pixabay.com/"><img height="17" width="auto" src="/theme/apps/pixabay-lib/libs/jquery.pixabay/img/logo.svg" alt="Pixabay"></a>'
-            + '                </span>'
-            + '                <button type="button" class="btn btn-default btn-pixabay-close">{{btnCloseText}}</button>'
-            + '                <button type="button" class="btn btn-primary btn-pixabay-save">{{btnSaveText}}</button>'
-            + '            </div>'
-            + '        </div>'
-            + '    </div>'
-            + '</div>';
+    var MODAL_TEMPLATE = '<div class="modal fade pixabaySearchModal" data-backdrop="static" data-keyboard="false" id="pixabaySearchModal-{{modalId}}" role="dialog" tabindex="-1"> <div class="modal-dialog modal-lg" role="document"> <div class="modal-content"> <div class="modal-header"> <button aria-label="Close" class="close btn-pixabay-close" type="button"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title">{{modalTitle}}</h4> </div><div class="modal-body"> <div class="row pixabaySearchContainer"> <div class="col-xs-8 col-xs-offset-2"> <div class="input-group"> <input class="form-control pixabaySearch" placeholder="Search term..." type="text" value="{{defaultQuery}}"> <span class="input-group-btn"> <button class="btn btn-default btn-pixabaySearch" type="button"> <i class="glyphicon glyphicon-search"></i> </button> </span> </div>{{#if showFilter}}<div class="form-inline pixabay-filters"> <div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_photos" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_photos">Photos</label> </div><div class="form-group pixabay-filter"> <input class="css-checkbox" id="pixabay_filter_illustration" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_illustration">Illustrations</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_horizontal" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_horizontal">Horizontal</label> </div><div class="form-group pixabay-filter"> <input checked="checked" class="css-checkbox" id="pixabay_filter_vertical" type="checkbox"> <label class="css-label lite-gray-check" for="pixabay_filter_vertical">Vertical</label> </div></div>{{/if}}</div></div><div class="row"> <div class="col-md-12 pixabaySearchContainer"> <div class="pixabayGallery flex-images"></div><div class="text-center pixabayNoResultsDiv lead" style="display: none;"> <p> <br/> Sorry, we couldn&#x27;t find any matches. </p></div><div class="text-center pixabayLoadingDiv"> <i class="glyphicon glyphicon-refresh glyphicon-spin glyphicon-3x"></i> </div><div class="text-center pixabayPaginationDiv" style="display: none;"></div></div></div></div><div class="modal-footer"> <span class="pull-left text-left">Powered By<br><a href="https://pixabay.com/" target="_blank"> <img alt="Pixabay" height="17" src="/theme/apps/pixabay-lib/libs/jquery.pixabay/img/logo.svg" width="auto"> </a> </span> <button class="btn btn-default btn-pixabay-close" type="button">{{btnCloseText}}</button> <button class="btn btn-primary btn-pixabay-save" type="button" disabled="disabled">{{btnSaveText}}</button> </div></div></div></div>';
+    var IMG_RESULT_TEMPLATE = '<div class="item" data-w="{{previewWidth}}" data-h="{{previewHeight}}" data-idhash="{{id_hash}}"><img src="{{previewURL}}" alt="">{{#if user}}{{#if user_id}}<div><div class="counts hide-xs hide-sm"><em><a class="credits-link" href="https://pixabay.com/users/{{user}}-{{user_id}}/" target="_blank">{{user}}</a> @ <a class="credits-link" href="https://pixabay.com/" target="_blank">Pixabay</a></em></div></div>{{/if}}{{/if}}</div>';
 
-    var FILTER_TEMPLATE = '<div class="form-inline pixabay-filters">'
-            + '                            <div class="form-group pixabay-filter">'
-            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_photos" checked="checked">'
-            + '                                <label for="pixabay_filter_photos" class="css-label lite-gray-check">Photos</label>'
-            + '                            </div>'
-            + '                            <div class="form-group pixabay-filter">'
-            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_illustration">'
-            + '                                <label for="pixabay_filter_illustration" class="css-label lite-gray-check">Illustrations</label>'
-            + '                            </div>'
-            + '                            <div class="form-group pixabay-filter">'
-            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_horizontal" checked="checked">'
-            + '                                <label for="pixabay_filter_horizontal" class="css-label lite-gray-check">Horizontal</label>'
-            + '                            </div>'
-            + '                            <div class="form-group pixabay-filter">'
-            + '                                <input type="checkbox" class="css-checkbox" id="pixabay_filter_vertical" checked="checked">'
-            + '                                <label for="pixabay_filter_vertical" class="css-label lite-gray-check">Vertical</label>'
-            + '                            </div>'
-            + '                        </div>';
+    var COMPILED_MODAL_TEMPLATE = Handlebars.compile(MODAL_TEMPLATE);
+    var COMPILED_IMG_RESULT_TEMPLATE = Handlebars.compile(IMG_RESULT_TEMPLATE);
 
     var DEFAULT_OPTIONS = {
         url: '/_pixabayImage',
@@ -67,7 +14,7 @@
             per_page: 20
         },
         showFilter: true,
-        initQuery: null,
+        defaultQuery: null,
         onSelect: null,
         onSave: null,
         onCancel: null
@@ -87,24 +34,28 @@
         $this.$modalId = (new Date()).getTime();
 
         // Generate the modal
-        var modalHtml = MODAL_TEMPLATE
-                .replace('{{modalId}}', $this.$modalId)
-                .replace('{{modalTitle}}', $this.$options.title)
-                .replace('{{initQuery}}', $this.$options.initQuery || '')
-                .replace('{{btnCloseText}}', $this.$options.btnCloseText)
-                .replace('{{btnSaveText}}', $this.$options.btnSaveText);
+        var vars = {
+            modalId: $this.$modalId,
+            modalTitle: $this.$options.title,
+            showFilter: $this.$options.showFilter,
+            defaultQuery: $this.$options.defaultQuery || '',
+            btnCloseText: $this.$options.btnCloseText,
+            btnSaveText: $this.$options.btnSaveText
+        };
 
-        var filterTemplate = '';
-        if ($this.$options.showFilter) {
-            filterTemplate = FILTER_TEMPLATE;
-        }
-        modalHtml = modalHtml.replace('{{filterTemplate}}', filterTemplate);
+        var modalHtml = COMPILED_MODAL_TEMPLATE(vars);
 
         $('body').append(modalHtml);
 
         $this.$modal = $('#pixabaySearchModal-' + $this.$modalId);
 
         // Register Modal Even listeners
+        $this.$modal.on('show.bs.modal', function(e){
+            // Revert Save Button
+            $this.$modal.find('button.btn-pixabay-save')
+                    .html($this.$options.btnSaveText);
+        });
+        
         $this.$modal.on('shown.bs.modal', function (e) {
             $this.search();
         });
@@ -114,7 +65,7 @@
             $this.$modal.find('.pixabayGallery').empty();
             $this.$modal.find('.pixabayLoadingDiv').show();
             $this.$modal.find('.pixabayNoResultsDiv').hide();
-            $this.$modal.find('.pixabaySearch').val('');
+            $this.$modal.find('.pixabaySearch').val($this.$options.defaultQuery || '');
             $this.$modal.find('.pixabayPaginationDiv').hide().empty();
         });
 
@@ -138,6 +89,10 @@
         // Register Image Select
         $this.$modal.on('click', 'div.item', function (e) {
             $this._INTERNAL._handleOnSelect.call($this, this);
+        });
+        
+        $this.$modal.on('click', 'div.item .credits-link', function(e){
+            e.stopPropagation();
         });
 
         $this.$modal.on('click', '.btn-pixabay-previous', function (e) {
@@ -231,6 +186,7 @@
             $this.$modal.find('.pixabayLoadingDiv').show();
             $this.$modal.find('.pixabayPaginationDiv').hide().empty();
             $this.$modal.find('.pixabayNoResultsDiv').hide();
+            $this.$modal.find('.btn-pixabay-save').prop('disabled', true);
             var q = $this.$modal.find('.pixabaySearch').val() || $this.$options.defaultQuery || '';
 
             var data = $.extend({}, $this.$options.searchOptions);
@@ -246,20 +202,7 @@
                     for (var i = 0; i < resp.result.hits.length; i++) {
                         var hit = resp.result.hits[i];
 
-                        var item = '<div class="item" data-w="' + hit.previewWidth + '" data-h="' + hit.previewHeight + '" data-imageid="' + hit.id + '">'
-                                + '    <img src="' + hit.previewURL + '" alt="">';
-
-                        if (hit.likes !== null && typeof hit.likes !== 'undefined') {
-                            item += '    <div>'
-                                    + '        <div class="counts hide-xs hide-sm">'
-                                    + '            <em><i class="fa fa-thumbs-o-up"></i> ' + hit.likes + '</em>'
-                                    + '            <em><i class="fa fa-star-o"></i> ' + hit.favorites + '</em>'
-                                    + '            <em><i class="fa fa-comment-o"></i> ' + hit.comments + '</em>'
-                                    + '        </div>'
-                                    + '    </div>';
-                        }
-
-                        item += +'</div>';
+                        var item = COMPILED_IMG_RESULT_TEMPLATE(hit);
 
                         item = $(item);
 
@@ -282,7 +225,7 @@
                             }
 
                             // Next Button
-                            if (resp.result.totalHits > ($this.$currentPage * $this.$options.searchOptions.per_page)) {
+                            if (resp.result.total > ($this.$currentPage * $this.$options.searchOptions.per_page)) {
                                 bar += '<button class="btn btn-default btn-pixabay-next">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>';
                                 showPagination = true;
                             }
@@ -330,11 +273,16 @@
 
                     $this.$modal.find('div.item').removeClass('selected');
                     $(elem).addClass('selected');
+                    $this.$modal.find('.btn-pixabay-save').prop('disabled', false);
                 }
             },
             _handleOnSave: function () {
                 var $this = this;
                 var sel = $this.$modal.find('div.item.selected');
+
+                // Adjust save button
+                $this.$modal.find('button.btn-pixabay-save')
+                        .html('<span class="glyphicon glyphicon-refresh glyphicon-spin"></span>');
 
                 var imageDetails = null;
 
@@ -356,6 +304,10 @@
                 if (!evt.isDefaultPrevented()) {
                     $this.hide();
                 }
+                
+                // Revert Save Button
+                $this.$modal.find('button.btn-pixabay-save')
+                        .html($this.$options.btnSaveText);
             },
             _handleOnCancel: function () {
                 var $this = this;

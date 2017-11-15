@@ -27,7 +27,7 @@
 }
 
 .pixabayGallery .item div .counts {
-    float: right;
+    text-align: center;
     position: relative;
     top: 0px;
     right: 0px;
@@ -144,4 +144,35 @@
 
 .pixabaySearchModal input[type=checkbox].css-checkbox.lrg:checked + label.css-label.lrg{
     background-position: 0 -20px;
+}
+
+.pixabaySearchModal .glyphicon-spin {
+    -webkit-animation: pxbspin 1000ms infinite linear;
+    animation: pxbspin 1000ms infinite linear;
+}
+
+.pixabaySearchModal .glyphicon-3x {
+    font-size: 3em;
+}
+
+@-webkit-keyframes pxbspin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes pxbspin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
 }
