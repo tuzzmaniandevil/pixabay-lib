@@ -5,10 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <button class="btn btn-info btn-pixabay" type="button"><i class="fa fa-search"></i> Search Pixabay</button>
-
-        <br/>
-        <br/>
+        <h3>Modal</h3>
+        <button class="btn btn-info btn-pixabay" type="button"><i class="fa fa-search"></i> Search Pixabay Modal</button>
+        
+        <hr/>
+        
+        <h3>Inline</h3>
+        <div id="imageSearch"></div>
+        
+        <hr/>
+        <h3>Result</h3>
         <br/>
         <div class="row">
             <div id="imageShow" class="col-md-12"></div>
@@ -22,7 +28,7 @@
 
         <script type="text/javascript">
             function initPixalBay() {
-                $('.btn-pixabay').pixabayModal({
+                $('.btn-pixabay').pixabaySearch({
                     defaultQuery: 'puppies',
                     searchOptions: {
                         response_group: 'high_resolution',
@@ -46,9 +52,34 @@
                     }
                 });
             }
+            
+            function initPixalBayInline() {
+                $('#imageSearch').pixabaySearch({
+                    inline: true,
+                    defaultQuery: 'puppies',
+                    searchOptions: {
+                        response_group: 'high_resolution',
+                        image_type: 'photo'
+                    },
+                    showFilter: false,
+                    onCancel: function (e) {
+                        flog('onCancel');
+                    },
+                    onSelect: function (e, image) {
+                        flog('onSave', e, image);
+                        $('#imageShow')
+                                .empty()
+                                .append('<img class="img-responsive" src="' + image.fullHDURL + '" />');
+                        $('#rawOutput')
+                                .empty()
+                                .append('<pre>' + JSON.stringify(image, null, 4) + '</pre>');
+                    }
+                });
+            }
 
             (function ($) {
                 initPixalBay();
+                initPixalBayInline();
             })(jQuery);
         </script>
     </body>

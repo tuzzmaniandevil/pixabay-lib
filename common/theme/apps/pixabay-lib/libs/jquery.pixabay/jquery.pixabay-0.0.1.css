@@ -43,25 +43,25 @@
     box-shadow: 0px 0px 2px 4px rgba(0,0,0,0.75);
 }
 
-.pixabaySearchModal .pixabaySearchContainer {
+.pixabaySearchWrapper .pixabaySearchContainer {
     padding-bottom: 10px;
 }
 
-.pixabaySearchModal .pixabayPaginationDiv {
+.pixabaySearchWrapper .pixabayPaginationDiv {
     padding-top: 15px;
 }
 
-.pixabaySearchModal .pixabay-filters {
+.pixabaySearchWrapper .pixabay-filters {
     text-align: center;
     margin-top: 15px;
 }
 
-.pixabaySearchModal .pixabay-filters > .pixabay-filter:not(:last-child){
+.pixabaySearchWrapper .pixabay-filters > .pixabay-filter:not(:last-child){
     padding-right: 10px;
 }
 
 /* Checkbox Styles */
-.pixabaySearchModal label {
+.pixabaySearchWrapper label {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -70,7 +70,7 @@
     user-select: none;
 }
 
-.pixabaySearchModal input[type=checkbox].css-checkbox {
+.pixabaySearchWrapper input[type=checkbox].css-checkbox {
     position: absolute; 
     overflow: hidden; 
     clip: rect(0 0 0 0); 
@@ -81,7 +81,7 @@
     border:0;
 }
 
-.pixabaySearchModal input[type=checkbox].css-checkbox + label.css-label {
+.pixabaySearchWrapper input[type=checkbox].css-checkbox + label.css-label {
     padding-left:20px;
     height:15px; 
     display:inline-block;
@@ -93,14 +93,14 @@
     cursor:pointer;
 }
 
-.pixabaySearchModal input[type=checkbox].css-checkbox:checked + label.css-label {
+.pixabaySearchWrapper input[type=checkbox].css-checkbox:checked + label.css-label {
     background-position: 0 -15px;
 }
 
-.pixabaySearchModal .lite-green-check{background-image:url(/theme/apps/pixabay-lib/libs/jquery.pixabay/img/lite-green-check.png);}
-.pixabaySearchModal .lite-gray-check{background-image:url(/theme/apps/pixabay-lib/libs/jquery.pixabay/img/lite-gray-check.png);}
+.pixabaySearchWrapper .lite-green-check{background-image:url(/theme/apps/pixabay-lib/libs/jquery.pixabay/img/lite-green-check.png);}
+.pixabaySearchWrapper .lite-gray-check{background-image:url(/theme/apps/pixabay-lib/libs/jquery.pixabay/img/lite-gray-check.png);}
 
-.pixabaySearchModal input[type=checkbox].css-checkbox.med + label.css-label.med {
+.pixabaySearchWrapper input[type=checkbox].css-checkbox.med + label.css-label.med {
     padding-left:22px;
     height:17px; 
     display:inline-block;
@@ -112,10 +112,10 @@
     cursor:pointer;
 }
 
-.pixabaySearchModal input[type=checkbox].css-checkbox.med:checked + label.css-label.med {
+.pixabaySearchWrapper input[type=checkbox].css-checkbox.med:checked + label.css-label.med {
     background-position: 0 -17px;
 }
-.pixabaySearchModal input[type=checkbox].css-checkbox.sme + label.css-label.sme {
+.pixabaySearchWrapper input[type=checkbox].css-checkbox.sme + label.css-label.sme {
     padding-left:22px;
     height:16px; 
     display:inline-block;
@@ -127,10 +127,10 @@
     cursor:pointer;
 }
 
-.pixabaySearchModal input[type=checkbox].css-checkbox.sme:checked + label.css-label.sme{
+.pixabaySearchWrapper input[type=checkbox].css-checkbox.sme:checked + label.css-label.sme{
     background-position: 0 -16px;
 }
-.pixabaySearchModal input[type=checkbox].css-checkbox.lrg + label.css-label.lrg {
+.pixabaySearchWrapper input[type=checkbox].css-checkbox.lrg + label.css-label.lrg {
     padding-left:22px;
     height:20px; 
     display:inline-block;
@@ -142,16 +142,16 @@
     cursor:pointer;
 }
 
-.pixabaySearchModal input[type=checkbox].css-checkbox.lrg:checked + label.css-label.lrg{
+.pixabaySearchWrapper input[type=checkbox].css-checkbox.lrg:checked + label.css-label.lrg{
     background-position: 0 -20px;
 }
 
-.pixabaySearchModal .glyphicon-spin {
+.pixabaySearchWrapper .glyphicon-spin {
     -webkit-animation: pxbspin 1000ms infinite linear;
     animation: pxbspin 1000ms infinite linear;
 }
 
-.pixabaySearchModal .glyphicon-3x {
+.pixabaySearchWrapper .glyphicon-3x {
     font-size: 3em;
 }
 
