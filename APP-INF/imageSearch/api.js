@@ -28,7 +28,7 @@
         var searchConfig = g.Pixabay.IMAGE_SEARCH.DEFAULT_CONFIG;
 
         if (Utils.isNotNull(config)) {
-            searchConfig = $.extend({}, g.Pixabay.IMAGE_SEARCH.DEFAULT_CONFIG, config);
+            searchConfig = Utils.extend({}, g.Pixabay.IMAGE_SEARCH.DEFAULT_CONFIG, config);
         }
 
         searchConfig.key = g._getPixabayApiKey();

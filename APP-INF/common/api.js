@@ -1,5 +1,26 @@
 /* global Utils, fileManager, log, formatter */
 
+/*
+ * XMLHttpRequest Polyfill
+ */
+(function (exports) {
+    if (exports.XMLHttpRequest) {
+        return;
+    }
+    exports.XMLHttpRequest = Java.type('io.milton.cloud.server.repoapps.http.XMLHttpRequest');
+})(this);
+
+
+/*
+ * FormData Polyfill
+ */
+(function (exports) {
+    if (exports.FormData) {
+        return;
+    }
+    exports.FormData = Java.type('io.milton.cloud.server.repoapps.http.FormData');
+})(this);
+
 (function (g) {
     g._configToParam = function (config) {
         if (Utils.isNull(config)) {
@@ -8,11 +29,12 @@
 
         var param = '';
 
-        $.each(config, function (propertyName, value) {
+        for (var propertyName in config) {
+            var value = config[propertyName];
             if (Utils.isStringNotBlank(propertyName)) {
                 param += propertyName + '=' + Utils.safeString(value) + '&';
             }
-        });
+        }
 
         if (param.endsWith('&')) {
             param = param.substring(0, param.length - 1);
